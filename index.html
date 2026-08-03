@@ -1,263 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <meta
-        name="description"
-        content="P.A.D. classified terminal for the KTX Retro Interdimensional Broadcasting network."
-    >
-
-    <title>P.A.D. Terminal | Trending Forever Beta</title>
-
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Recovered Paranormal Acoustic Device operated by the Paranormal Acoustic Division.">
+  <meta name="theme-color" content="#050805">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <title>P.A.D. | Trending Forever Beta</title>
 </head>
-
 <body>
-    <div class="app-shell">
+  <div class="crt-overlay" aria-hidden="true"></div>
 
-        <header class="app-header">
-            <div class="brand-block">
-                <p class="eyebrow">KTX-01 // EARTH PRIME</p>
-
-                <h1>P.A.D.</h1>
-
-                <p class="division-name">
-                    Paranormal Acoustic Division
-                </p>
-            </div>
-
-            <div class="system-status">
-                <span class="status-light"></span>
-                SIGNAL ONLINE
-            </div>
-        </header>
-
-        <main class="screen-area">
-
-            <section class="screen active-screen" id="terminal-screen">
-                <p class="screen-code">01 // TERMINAL</p>
-
-                <h2>Authorized Access</h2>
-
-                <p class="screen-intro">
-                    Classified communications portal for recovered
-                    transmissions, anomalous case files, and active
-                    interdimensional investigations.
-                </p>
-
-                <div class="status-panel">
-                    <p>
-                        <span>NETWORK</span>
-                        KTX RETRO
-                    </p>
-
-                    <p>
-                        <span>DIVISION</span>
-                        P.A.D.
-                    </p>
-
-                    <p>
-                        <span>CLEARANCE</span>
-                        CADET
-                    </p>
-
-                    <p>
-                        <span>TRANSMISSION</span>
-                        STABLE
-                    </p>
-                </div>
-            </section>
-
-            <section class="screen" id="radio-screen">
-                <p class="screen-code">02 // COMMUNICATIONS</p>
-
-                <h2>KTX Radio</h2>
-
-                <p class="screen-intro">
-                    Live transmission from KTX Retro Interdimensional
-                    Broadcasting.
-                </p>
-
-                <div class="external-links">
-                    <a
-                        href="https://ktxretro.godaddysites.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        KTX Retro Main Terminal
-                    </a>
-
-                    <a
-                        href="https://www.youtube.com/@ThatReeBShowOfficial"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        YouTube Archive
-                    </a>
-
-                    <a
-                        href="https://rumble.com/user/ktxretro"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Rumble Archive
-                    </a>
-
-                    <a
-                        href="https://odysee.com/@ThatReeBShow:a"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Odysee Archive
-                    </a>
-
-                    <a
-                        href="https://ktxretro.godaddysites.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Open the Two-Way Transmission Channel
-                    </a>
-                </div>
-            </section>
-
-            <section class="screen" id="briefings-screen">
-                <p class="screen-code">03 // ARCHIVE</p>
-
-                <h2>Cadet Briefing Room</h2>
-
-                <p class="screen-intro">
-                    Restricted case files and visual-identification
-                    dossiers.
-                </p>
-
-                <div class="case-list">
-                    <button type="button">SIREN-01 // VESPER</button>
-                    <button type="button">SIREN-02 // KIKI GLITCH</button>
-                    <button type="button">SIREN-03 // JUNI</button>
-                </div>
-            </section>
-
-            <section class="screen" id="decoder-screen">
-                <p class="screen-code">04 // DECODER</p>
-
-                <h2>Signal Decoder</h2>
-
-                <p class="screen-intro">
-                    Enter an authorized numeric transmission sequence.
-                </p>
-
-                <form class="decoder-form" id="decoder-form">
-                    <label for="decoder-input">
-                        TRANSMISSION CODE
-                    </label>
-
-                    <input
-                        id="decoder-input"
-                        name="decoder-input"
-                        type="text"
-                        inputmode="numeric"
-                        autocomplete="off"
-                        placeholder="00-00-00-00"
-                    >
-
-                    <button type="submit">
-                        DECODE SIGNAL
-                    </button>
-                </form>
-
-                <div
-                    class="decoder-response"
-                    id="decoder-response"
-                    aria-live="polite"
-                >
-                    AWAITING INPUT
-                </div>
-            </section>
-
-        </main>
-
-        <aside class="radio-player" aria-label="KTX live radio player">
-            <button
-                class="play-button"
-                id="play-button"
-                type="button"
-                aria-label="Play KTX Radio"
-            >
-                ▶
-            </button>
-
-            <div class="live-indicator">
-                <span></span>
-                LIVE
-            </div>
-
-            <div class="track-details">
-                <strong id="track-artist">KTX RETRO</strong>
-                <span id="track-title">LIVE TRANSMISSION</span>
-            </div>
-
-            <button
-                class="mute-button"
-                id="mute-button"
-                type="button"
-                aria-label="Mute KTX Radio"
-            >
-                ◖
-            </button>
-
-            <audio
-                id="radio-audio"
-                preload="none"
-                src="https://video2.getstreamhosting.com:8070/stream"
-            ></audio>
-        </aside>
-
-        <nav class="bottom-nav" aria-label="Primary navigation">
-            <button
-                class="nav-button active"
-                type="button"
-                data-screen="terminal-screen"
-            >
-                TERMINAL
-            </button>
-
-            <button
-                class="nav-button"
-                type="button"
-                data-screen="radio-screen"
-            >
-                RADIO
-            </button>
-
-            <button
-                class="nav-button"
-                type="button"
-                data-screen="briefings-screen"
-            >
-                BRIEFINGS
-            </button>
-
-            <button
-                class="nav-button"
-                type="button"
-                data-screen="decoder-screen"
-            >
-                DECODER
-            </button>
-        </nav>
-
-        <footer class="app-footer">
-            TRENDING FOREVER BETA // VERSION 0.1
-        </footer>
-
+  <section class="boot-screen" id="boot-screen">
+    <div class="boot-panel">
+      <p class="boot-kicker">RECOVERED EQUIPMENT</p>
+      <img class="boot-logo" src="assets/images/pad-logo.png" alt="P.A.D.">
+      <p class="boot-device-name">PARANORMAL ACOUSTIC DEVICE</p>
+      <p class="boot-owner">PROPERTY OF THE<br>PARANORMAL ACOUSTIC DIVISION</p>
+      <p class="boot-location">KTX-01 // EARTH PRIME</p>
+      <div class="boot-log" id="boot-log">INITIALIZING...</div>
+      <button class="boot-enter" id="boot-enter" type="button" hidden>ENTER TERMINAL</button>
     </div>
+  </section>
 
-    <script src="script.js"></script>
+  <div class="app-shell" id="app-shell" hidden>
+    <header class="app-header">
+      <div class="header-brand">
+        <img class="header-pad-logo" src="assets/images/pad-logo.png" alt="P.A.D.">
+        <div>
+          <p class="micro-label">KTX-01 // EARTH PRIME</p>
+          <h1>P.A.D.</h1>
+          <p>PARANORMAL ACOUSTIC DEVICE</p>
+          <small>PROPERTY OF THE PARANORMAL ACOUSTIC DIVISION</small>
+        </div>
+      </div>
+      <a class="ktx-seal-link" href="https://ktxretro.godaddysites.com/" target="_blank" rel="noopener noreferrer">
+        <img src="assets/images/ktx-retro-logo.png" alt="KTX Retro">
+      </a>
+      <div class="system-status"><span></span>ONLINE</div>
+    </header>
+
+    <main class="screen-area">
+      <section class="screen active-screen" id="terminal-screen">
+        <p class="screen-code">MODULE 01 // TERMINAL</p>
+        <h2>AUTHORIZED ACCESS</h2>
+        <p class="screen-intro">Classified communications terminal for recovered transmissions, anomalous case files, and active interdimensional investigations.</p>
+        <div class="status-grid">
+          <article><span>NETWORK</span><strong>KTX RETRO</strong></article>
+          <article><span>OPERATING UNIT</span><strong>PARANORMAL ACOUSTIC DIVISION</strong></article>
+          <article><span>CLEARANCE</span><strong>CADET</strong></article>
+          <article><span>SIGNAL STATUS</span><strong>STABLE</strong></article>
+          <article><span>TERMINAL BUILD</span><strong>BETA 0.2.1</strong></article>
+          <article><span>DEVICE SERIAL</span><strong>PAD-KTX01-BETA</strong></article>
+        </div>
+      </section>
+
+      <section class="screen" id="radio-screen">
+        <p class="screen-code">MODULE 02 // COMMUNICATIONS</p>
+        <h2>KTX RADIO</h2>
+        <p class="screen-intro">Live transmission and external archive access from KTX Retro Interdimensional Broadcasting.</p>
+        <div class="external-links">
+          <a href="https://ktxretro.godaddysites.com/" target="_blank" rel="noopener noreferrer">KTX RETRO MAIN TERMINAL</a>
+          <a href="https://www.youtube.com/@ThatReeBShowOfficial" target="_blank" rel="noopener noreferrer">YOUTUBE ARCHIVE</a>
+          <a href="https://rumble.com/user/ktxretro" target="_blank" rel="noopener noreferrer">RUMBLE ARCHIVE</a>
+          <a href="https://odysee.com/@ThatReeBShow:a" target="_blank" rel="noopener noreferrer">ODYSEE ARCHIVE</a>
+          <a href="https://discord.gg/Zzc8WVYdDa" target="_blank" rel="noopener noreferrer">OPEN THE TWO-WAY TRANSMISSION CHANNEL<small>SECURE CHANNEL AVAILABLE</small></a>
+        </div>
+      </section>
+
+      <section class="screen" id="briefings-screen">
+        <p class="screen-code">MODULE 03 // CASE FILES</p>
+        <h2>CADET BRIEFING ROOM</h2>
+        <p class="screen-intro">Authorized visual-identification records. Final dossier art can be added without changing the navigation.</p>
+        <div class="case-grid">
+          <button class="case-card" data-dossier="vesper" data-image="assets/dossiers/vesper-dossier.png" type="button">
+            <img src="assets/dossiers/vesper-dossier.png" alt="Vesper Vane classified dossier">
+            <span>████ CLASSIFIED ████</span><strong>SIREN-01</strong><em>VESPER VANE</em><small>OPEN AUTHORIZED FILE</small>
+          </button>
+          <button class="case-card" data-dossier="kiki" data-image="assets/dossiers/kiki-dossier.png" type="button">
+            <img src="assets/dossiers/kiki-dossier.png" alt="KiKi Glitch classified dossier">
+            <span>████ CLASSIFIED ████</span><strong>SIREN-02</strong><em>KIKI GLITCH</em><small>OPEN AUTHORIZED FILE</small>
+          </button>
+          <button class="case-card" data-dossier="juni" data-image="assets/dossiers/juni-dossier.png" type="button">
+            <img src="assets/dossiers/juni-dossier.png" alt="Juni classified dossier">
+            <span>████ CLASSIFIED ████</span><strong>SIREN-03</strong><em>JUNI</em><small>OPEN AUTHORIZED FILE</small>
+          </button>
+        </div>
+        <div class="dossier-response" id="dossier-response">SELECT AUTHORIZED FILE</div>
+      </section>
+
+      <section class="screen" id="decoder-screen">
+        <p class="screen-code">MODULE 04 // SIGNAL DECODER</p>
+        <h2>ENTER RECOVERED SIGNAL</h2>
+        <p class="screen-intro">Submit a recovered transmission for comparison against known P.A.D. signal patterns.</p>
+        <form class="decoder-form" id="decoder-form">
+          <label for="decoder-input">RECOVERED SIGNAL</label>
+          <input id="decoder-input" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ENTER SIGNAL">
+          <button type="submit">VERIFY SIGNAL</button>
+        </form>
+        <div class="decoder-response" id="decoder-response">AWAITING RECOVERED SIGNAL</div>
+      </section>
+    </main>
+
+    <aside class="radio-player">
+      <button class="play-button" id="play-button" type="button" aria-label="Play KTX Radio">▶</button>
+      <div class="live-indicator"><span></span>LIVE</div>
+      <div class="track-details"><strong id="track-artist">KTX RETRO</strong><span id="track-title">LIVE TRANSMISSION</span></div>
+      <button class="mute-button" id="mute-button" type="button" aria-label="Mute KTX Radio">◖</button>
+      <audio id="radio-audio" preload="none" src="https://video2.getstreamhosting.com:8070/stream"></audio>
+    </aside>
+
+    <nav class="bottom-nav">
+      <button class="nav-button active" data-screen="terminal-screen" type="button">TERMINAL</button>
+      <button class="nav-button" data-screen="radio-screen" type="button">COMMS</button>
+      <button class="nav-button" data-screen="briefings-screen" type="button">FILES</button>
+      <button class="nav-button" data-screen="decoder-screen" type="button">DECODER</button>
+    </nav>
+
+    <footer class="app-footer">TRENDING FOREVER BETA // P.A.D. BUILD 0.2.1</footer>
+  </div>
+
+
+  <div class="dossier-modal" id="dossier-modal" hidden>
+    <button class="dossier-close" id="dossier-close" type="button" aria-label="Close dossier">×</button>
+    <img id="dossier-full-image" src="" alt="">
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

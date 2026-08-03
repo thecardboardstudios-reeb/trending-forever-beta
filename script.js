@@ -1,43 +1,55 @@
 "use strict";
 
-// --------------------------------------------------
-// SCREEN NAVIGATION
-// --------------------------------------------------
+const STREAM_URL = "https://video2.getstreamhosting.com:8070/stream";
+const METADATA_URL = "https://video2.getstreamhosting.com:8070/status-json.xsl";
+const REWARD_URL = "https://ktxretro.godaddysites.com/pad-rewards";
+const BETA_SIGNAL = "GLITCH";
 
-const navButtons = document.querySelectorAll(".nav-button");
-const screens = document.querySelectorAll(".screen");
+const bootScreen = document.getElementById("boot-screen");
+const bootLog = document.getElementById("boot-log");
+const bootEnter = document.getElementById("boot-enter");
+const appShell = document.getElementById("app-shell");
 
-navButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        const targetScreen = button.dataset.screen;
+const bootMessages = [
+  "INITIALIZING...",
+  "CONNECTING TO KTX-01...",
+  "VERIFYING DIMENSIONAL LOCK...",
+  "LOADING PARANORMAL ACOUSTIC DIVISION PROTOCOLS...",
+  "TERMINAL VERIFIED.",
+  "WELCOME, CADET."
+];
 
-        screens.forEach((screen) => {
-            screen.classList.remove("active-screen");
-        });
+let bootIndex = 0;
+function runBootSequence() {
+  bootLog.textContent = bootMessages[bootIndex++];
+  if (bootIndex < bootMessages.length) {
+    setTimeout(runBootSequence, 550);
+  } else {
+    setTimeout(() => { bootEnter.hidden = false; }, 350);
+  }
+}
 
-        navButtons.forEach((navButton) => {
-            navButton.classList.remove("active");
-        });
-
-        const selectedScreen = document.getElementById(targetScreen);
-
-        if (selectedScreen) {
-            selectedScreen.classList.add("active-screen");
-            button.classList.add("active");
-        }
-    });
+bootEnter.addEventListener("click", () => {
+  sessionStorage.setItem("pad-boot-complete", "true");
+  bootScreen.hidden = true;
+  appShell.hidden = false;
 });
 
+if (sessionStorage.getItem("pad-boot-complete") === "true") {
+  bootScreen.hidden = true;
+  appShell.hidden = false;
+} else {
+  runBootSequence();
+}
 
-// --------------------------------------------------
-// KTX RADIO PLAYER
-// --------------------------------------------------
-
-const streamUrl =
-    "https://video2.getstreamhosting.com:8070/stream";
-
-const metadataUrl =
-    "https://video2.getstreamhosting.com:8070/status-json.xsl";
+document.querySelectorAll(".nav-button").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".screen").forEach((screen) => screen.classList.remove("active-screen"));
+    document.querySelectorAll(".nav-button").forEach((item) => item.classList.remove("active"));
+    document.getElementById(button.dataset.screen)?.classList.add("active-screen");
+    button.classList.add("active");
+  });
+});
 
 const radioAudio = document.getElementById("radio-audio");
 const playButton = document.getElementById("play-button");
@@ -45,209 +57,131 @@ const muteButton = document.getElementById("mute-button");
 const trackArtist = document.getElementById("track-artist");
 const trackTitle = document.getElementById("track-title");
 
-function showStoppedButton() {
-    playButton.textContent = "▶";
-    playButton.setAttribute("aria-label", "Play KTX Radio");
-}
-
-function showPlayingButton() {
-    playButton.textContent = "❚❚";
-    playButton.setAttribute("aria-label", "Pause KTX Radio");
+function setPlaying(isPlaying) {
+  playButton.textContent = isPlaying ? "❚❚" : "▶";
+  playButton.setAttribute("aria-label", isPlaying ? "Pause KTX Radio" : "Play KTX Radio");
 }
 
 playButton.addEventListener("click", async () => {
-    if (radioAudio.paused) {
-        try {
-            // Reconnects to the live point of the broadcast.
-            radioAudio.src = streamUrl;
-            await radioAudio.play();
-            showPlayingButton();
-        } catch (error) {
-            console.error("Radio playback failed:", error);
-            showStoppedButton();
-        }
-    } else {
-        radioAudio.pause();
-        showStoppedButton();
+  if (radioAudio.paused) {
+    try {
+      radioAudio.src = STREAM_URL;
+      await radioAudio.play();
+      setPlaying(true);
+    } catch (error) {
+      console.error("KTX playback failed:", error);
+      setPlaying(false);
     }
+  } else {
+    radioAudio.pause();
+    setPlaying(false);
+  }
 });
 
 muteButton.addEventListener("click", () => {
-    radioAudio.muted = !radioAudio.muted;
-
-    if (radioAudio.muted) {
-        muteButton.textContent = "×";
-        muteButton.setAttribute("aria-label", "Unmute KTX Radio");
-    } else {
-        muteButton.textContent = "◖";
-        muteButton.setAttribute("aria-label", "Mute KTX Radio");
-    }
+  radioAudio.muted = !radioAudio.muted;
+  muteButton.textContent = radioAudio.muted ? "×" : "◖";
 });
-
-radioAudio.addEventListener("error", () => {
-    showStoppedButton();
-});
-
-
-// --------------------------------------------------
-// CURRENT SONG METADATA
-// --------------------------------------------------
 
 function showFallbackMetadata() {
+  trackArtist.textContent = "KTX RETRO";
+  trackTitle.textContent = "LIVE TRANSMISSION";
+}
+
+function displayMetadata(value) {
+  const title = String(value || "").trim();
+  if (!title) return showFallbackMetadata();
+  const separator = title.includes(" - ") ? " - " : title.includes(" — ") ? " — " : null;
+  if (!separator) {
     trackArtist.textContent = "KTX RETRO";
-    trackTitle.textContent = "LIVE TRANSMISSION";
-}
-
-function findIcecastSource(payload) {
-    const source = payload?.icestats?.source;
-
-    if (!source) {
-        return null;
-    }
-
-    if (Array.isArray(source)) {
-        return (
-            source.find((item) =>
-                String(item?.listenurl || "").includes("/stream")
-            ) ||
-            source.find((item) => item?.title) ||
-            source[0]
-        );
-    }
-
-    return source;
-}
-
-function displayMetadata(rawTitle) {
-    const title = String(rawTitle || "").trim();
-
-    if (!title) {
-        showFallbackMetadata();
-        return;
-    }
-
-    const separator = title.includes(" - ")
-        ? " - "
-        : title.includes(" — ")
-            ? " — "
-            : null;
-
-    if (separator) {
-        const parts = title.split(separator);
-        const artist = parts.shift().trim();
-        const song = parts.join(separator).trim();
-
-        trackArtist.textContent = artist || "KTX RETRO";
-        trackTitle.textContent = song || title;
-    } else {
-        trackArtist.textContent = "KTX RETRO";
-        trackTitle.textContent = title;
-    }
+    trackTitle.textContent = title;
+    return;
+  }
+  const parts = title.split(separator);
+  trackArtist.textContent = parts.shift().trim() || "KTX RETRO";
+  trackTitle.textContent = parts.join(separator).trim() || title;
 }
 
 async function updateMetadata() {
-    try {
-        const response = await fetch(metadataUrl, {
-            cache: "no-store"
-        });
-
-        if (!response.ok) {
-            throw new Error(`Metadata error: ${response.status}`);
-        }
-
-        const payload = await response.json();
-        const source = findIcecastSource(payload);
-
-        displayMetadata(source?.title);
-    } catch (error) {
-        console.warn("Metadata unavailable:", error);
-        showFallbackMetadata();
-    }
+  try {
+    const response = await fetch(METADATA_URL, { cache: "no-store" });
+    const payload = await response.json();
+    const source = payload?.icestats?.source;
+    const selected = Array.isArray(source)
+      ? source.find((item) => String(item?.listenurl || "").includes("/stream")) || source[0]
+      : source;
+    displayMetadata(selected?.title);
+  } catch (error) {
+    showFallbackMetadata();
+  }
 }
 
 showFallbackMetadata();
 updateMetadata();
-window.setInterval(updateMetadata, 15000);
+setInterval(updateMetadata, 15000);
 
+const dossierResponse = document.getElementById("dossier-response");
+const dossierModal = document.getElementById("dossier-modal");
+const dossierClose = document.getElementById("dossier-close");
+const dossierFullImage = document.getElementById("dossier-full-image");
 
-// --------------------------------------------------
-// PAD SIGNAL DECODER
-// --------------------------------------------------
+document.querySelectorAll("[data-dossier]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const image = button.dataset.image;
+    const name = button.querySelector("em")?.textContent || "Authorized dossier";
+
+    dossierFullImage.src = image;
+    dossierFullImage.alt = `${name} classified dossier`;
+    dossierModal.hidden = false;
+    document.body.style.overflow = "hidden";
+    dossierResponse.textContent = `${name.toUpperCase()} // FILE OPENED`;
+  });
+});
+
+function closeDossier() {
+  dossierModal.hidden = true;
+  dossierFullImage.src = "";
+  document.body.style.overflow = "";
+}
+
+dossierClose.addEventListener("click", closeDossier);
+dossierModal.addEventListener("click", (event) => {
+  if (event.target === dossierModal) {
+    closeDossier();
+  }
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !dossierModal.hidden) {
+    closeDossier();
+  }
+});
 
 const decoderForm = document.getElementById("decoder-form");
 const decoderInput = document.getElementById("decoder-input");
-const decoderResponse =
-    document.getElementById("decoder-response");
-
-const rewardUrl =
-    "https://ktxretro.godaddysites.com/pad-rewards";
-
-function decodeA1Z26(value) {
-    const cleanedValue = value.trim().toUpperCase();
-
-    // Also accepts the decoded word itself.
-    if (/^[A-Z]+$/.test(cleanedValue)) {
-        return cleanedValue;
-    }
-
-    const numbers = cleanedValue
-        .split(/[^0-9]+/)
-        .filter(Boolean)
-        .map(Number);
-
-    if (
-        numbers.length === 0 ||
-        numbers.some((number) => number < 1 || number > 26)
-    ) {
-        return null;
-    }
-
-    return numbers
-        .map((number) =>
-            String.fromCharCode(64 + number)
-        )
-        .join("");
-}
-
-function showDecoderFailure() {
-    decoderResponse.innerHTML = `
-        ACCESS DENIED<br>
-        NO RECOGNIZED PAD SIGNAL PATTERN
-    `;
-}
-
-function showStaticReward() {
-    localStorage.setItem(
-        "ktx-interface-override-unlocked",
-        "true"
-    );
-
-    decoderResponse.innerHTML = `
-        SIGNAL VERIFIED<br>
-        RECOVERED TRANSMISSION LOCATED<br>
-        INTERFACE OVERRIDE ACCESS GRANTED<br><br>
-        <a
-            href="${rewardUrl}"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            ACCESS FILE
-        </a>
-    `;
-}
+const decoderResponse = document.getElementById("decoder-response");
+let failedSignalCount = Number(sessionStorage.getItem("pad-failed-signals") || 0);
 
 decoderForm.addEventListener("submit", (event) => {
-    event.preventDefault();
+  event.preventDefault();
+  const signal = decoderInput.value.trim().toUpperCase();
+  decoderResponse.textContent = "VERIFYING RECOVERED SIGNAL...";
 
-    const decodedSignal = decodeA1Z26(decoderInput.value);
-
-    decoderResponse.textContent = "DECRYPTING SIGNAL...";
-
-    window.setTimeout(() => {
-        if (decodedSignal === "STATIC") {
-            showStaticReward();
-        } else {
-            showDecoderFailure();
-        }
-    }, 900);
+  setTimeout(() => {
+    if (signal === BETA_SIGNAL) {
+      localStorage.setItem("pad-beta-signal-glitch", "verified");
+      decoderResponse.innerHTML = `SIGNAL VERIFIED<br>KNOWN BETA TRANSMISSION DETECTED<br>CADET ACCESS CONFIRMED<br><br><a href="${REWARD_URL}" target="_blank" rel="noopener noreferrer">ACCESS RECOVERED FILE</a>`;
+    } else {
+      failedSignalCount += 1;
+      sessionStorage.setItem("pad-failed-signals", String(failedSignalCount));
+      decoderResponse.innerHTML = failedSignalCount >= 3
+        ? "SIGNAL NOT RECOGNIZED<br>UNAUTHORIZED PATTERN ACTIVITY DETECTED<br>THIS INCIDENT HAS BEEN LOGGED"
+        : "SIGNAL NOT RECOGNIZED<br>NO MATCH FOUND<br>RETURN TO STANDBY";
+    }
+  }, 900);
 });
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("service-worker.js").catch(console.warn);
+  });
+}
