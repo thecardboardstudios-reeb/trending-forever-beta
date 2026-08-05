@@ -1,16 +1,24 @@
-# Trending Forever Beta — P.A.D. Build 0.2.1
+TRENDING FOREVER
 
-This build now includes the official P.A.D. artwork, all three Sirens dossiers, immediate Discord access, the working GLITCH beta signal, and the existing reward-page destination.
+Theme: SIRENS OF POP
+Build: Sirens Skin v1.0
+Status: Takeover Event
 
-## Confirmed links
-- KTX Retro main site
-- YouTube
-- Rumble
-- Odysee
-- Discord: immediate access
-- GLITCH reward page: existing PAD rewards page
+This is a complete replacement build created from the known-good P.A.D. Beta 0.2.1 package.
 
-## Dossiers
-- Vesper Vane
-- KiKi Glitch
-- Juni
+Unchanged core functions:
+- KTX live radio
+- External links
+- Immediate Discord access
+- Decoder signal: GLITCH
+- Existing reward destination
+- Installable PWA
+
+Sirens changes:
+- Official Sirens branding
+- Glossy chromed-black environment
+- Hot-pink controls and persistent radio player
+- Very pale pink reading text
+- Lime-green secondary status accents
+- TARGETS tab
+- ReeB, Spike, and Funkenstein target dossiers

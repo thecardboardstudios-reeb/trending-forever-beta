@@ -11,12 +11,12 @@ const bootEnter = document.getElementById("boot-enter");
 const appShell = document.getElementById("app-shell");
 
 const bootMessages = [
-  "INITIALIZING...",
-  "CONNECTING TO KTX-01...",
-  "VERIFYING DIMENSIONAL LOCK...",
-  "LOADING PARANORMAL ACOUSTIC DIVISION PROTOCOLS...",
-  "TERMINAL VERIFIED.",
-  "WELCOME, CADET."
+  "SIGNAL OVERRIDE DETECTED...",
+  "BYPASSING P.A.D. SECURITY...",
+  "REWRITING INTERFACE...",
+  "TRENDING FOREVER...",
+  "THE SIRENS OF POP HAVE ASSUMED CONTROL.",
+  "WELCOME TO THE FREQUENCY."
 ];
 
 let bootIndex = 0;
@@ -164,18 +164,18 @@ let failedSignalCount = Number(sessionStorage.getItem("pad-failed-signals") || 0
 decoderForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const signal = decoderInput.value.trim().toUpperCase();
-  decoderResponse.textContent = "VERIFYING RECOVERED SIGNAL...";
+  decoderResponse.textContent = "VERIFYING FREQUENCY...";
 
   setTimeout(() => {
     if (signal === BETA_SIGNAL) {
       localStorage.setItem("pad-beta-signal-glitch", "verified");
-      decoderResponse.innerHTML = `SIGNAL VERIFIED<br>KNOWN BETA TRANSMISSION DETECTED<br>CADET ACCESS CONFIRMED<br><br><a href="${REWARD_URL}" target="_blank" rel="noopener noreferrer">ACCESS RECOVERED FILE</a>`;
+      decoderResponse.innerHTML = `FREQUENCY VERIFIED<br>WE HEARD YOU<br>WELCOME TO THE FREQUENCY<br><br><a href="${REWARD_URL}" target="_blank" rel="noopener noreferrer">ACCESS RECOVERED FILE</a>`;
     } else {
       failedSignalCount += 1;
       sessionStorage.setItem("pad-failed-signals", String(failedSignalCount));
       decoderResponse.innerHTML = failedSignalCount >= 3
-        ? "SIGNAL NOT RECOGNIZED<br>UNAUTHORIZED PATTERN ACTIVITY DETECTED<br>THIS INCIDENT HAS BEEN LOGGED"
-        : "SIGNAL NOT RECOGNIZED<br>NO MATCH FOUND<br>RETURN TO STANDBY";
+        ? "FREQUENCY NOT RECOGNIZED<br>UNAUTHORIZED LISTENER DETECTED<br>YOUR ATTEMPT HAS BEEN NOTED"
+        : "FREQUENCY NOT RECOGNIZED<br>NO MATCH FOUND<br>TRY LISTENING CLOSER";
     }
   }, 900);
 });
