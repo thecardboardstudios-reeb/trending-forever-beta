@@ -1,9 +1,5 @@
-const CACHE_NAME = "trending-forever-sirens-v1";
+const CACHE_NAME = "pad-beta-0.2.1-shell";
 const APP_SHELL = [
-  "./assets/dossiers/funkenstein-target.png",
-  "./assets/dossiers/spike-target.png",
-  "./assets/dossiers/reeb-target.png",
-  "./assets/images/sirens-logo.png",
   "./",
   "./index.html",
   "./style.css",

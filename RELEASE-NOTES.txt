@@ -1,23 +1,15 @@
-TRENDING FOREVER — SIRENS SKIN v1.0
+TRENDING FOREVER BETA — P.A.D. BUILD 0.2.1
 
-THEME:
-SIRENS OF POP
+ADDED
+- Official P.A.D. artwork
+- Official Vesper dossier
+- Official KiKi Glitch dossier
+- Official Juni dossier
+- Full-screen dossier viewer
+- Immediate two-way transmission channel access
+- Updated PWA icons from official P.A.D. artwork
 
-STORY STATUS:
-SIGNAL OVERRIDE / HOSTILE TAKEOVER
-
-BOOT:
-SIGNAL OVERRIDE DETECTED
-TRENDING FOREVER
-THE SIRENS OF POP HAVE ASSUMED CONTROL
-WELCOME TO THE FREQUENCY
-
-UNCHANGED:
-Radio stream, external links, Discord, GLITCH, reward page, navigation, and PWA installation.
-
-FINAL POLISH:
-- Removed green interface accents
-- All UI accents now use pinks only
-- Darkened piano-black shell
-- Enlarged KTX logo
-- Improved dossier presentation
+CONFIRMED
+- Beta recovered signal: GLITCH
+- Reward page URL is correct
+- Discord is not decoder-locked

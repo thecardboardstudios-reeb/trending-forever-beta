@@ -1,12 +1,12 @@
 {
-  "name": "Trending Forever \u2014 Sirens Takeover",
-  "short_name": "Trending Forever",
-  "description": "The Sirens of Pop have assumed control of the frequency.",
+  "name": "P.A.D. \u2014 Trending Forever Beta",
+  "short_name": "P.A.D.",
+  "description": "Recovered Paranormal Acoustic Device operated by the Paranormal Acoustic Division.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#030104",
-  "theme_color": "#ff4fb7",
+  "background_color": "#020402",
+  "theme_color": "#050805",
   "orientation": "portrait-primary",
   "icons": [
     {
